@@ -13,48 +13,61 @@
 import HTTP_Standard
 import Testing
 
-@Suite("HTTP Standard Tests")
-struct HTTPStandardTests {
+extension HTTP {
+    @Suite("HTTP Standard Tests")
+    struct Test {
+        @Suite
+        struct Unit {
 
-    // MARK: - RFC 9110 (semantics) through the converger
+            // MARK: - RFC 9110 (semantics) through the converger
 
-    @Suite("Semantics (RFC 9110)")
-    struct SemanticsTests {
+            @Suite("Semantics (RFC 9110)")
+            struct Semantics {
 
-        @Test
-        func `method vocabulary reaches through the converger`() {
-            #expect(HTTP.Method.get.isSafe)
-            #expect(HTTP.Method.get.isIdempotent)
-            #expect(!HTTP.Method.post.isSafe)
+                @Test
+                func `method vocabulary reaches through the converger`() {
+                    #expect(HTTP.Method.get.isSafe)
+                    #expect(HTTP.Method.get.isIdempotent)
+                    #expect(!HTTP.Method.post.isSafe)
+                }
+
+                @Test
+                func `status vocabulary reaches through the converger`() {
+                    #expect(HTTP.Status.ok != HTTP.Status.created)
+                }
+            }
+
+            // MARK: - RFC 9112 (HTTP/1.1) through the converger
+
+            @Suite("HTTP/1.1 (RFC 9112)")
+            struct Syntax {
+
+                @Test
+                func `version vocabulary reaches through the converger`() {
+                    #expect(HTTP.Version.http11.major == 1)
+                    #expect(HTTP.Version.http11.minor == 1)
+                }
+            }
+
+            // MARK: - RFC 9111 (caching) through the converger
+
+            @Suite("Caching (RFC 9111)")
+            struct Caching {
+
+                @Test
+                func `caching vocabulary reaches through the converger`() {
+                    let _: HTTP.Age.Type = HTTP.Age.self
+                    let _: HTTP.CacheControl.Type = HTTP.CacheControl.self
+                }
+            }
         }
 
-        @Test
-        func `status vocabulary reaches through the converger`() {
-            #expect(HTTP.Status.ok != HTTP.Status.created)
+        @Suite
+        struct `Edge Case` {
         }
-    }
 
-    // MARK: - RFC 9112 (HTTP/1.1) through the converger
-
-    @Suite("HTTP/1.1 (RFC 9112)")
-    struct SyntaxTests {
-
-        @Test
-        func `version vocabulary reaches through the converger`() {
-            #expect(HTTP.Version.http11.major == 1)
-            #expect(HTTP.Version.http11.minor == 1)
-        }
-    }
-
-    // MARK: - RFC 9111 (caching) through the converger
-
-    @Suite("Caching (RFC 9111)")
-    struct CachingTests {
-
-        @Test
-        func `caching vocabulary reaches through the converger`() {
-            let _: HTTP.Age.Type = HTTP.Age.self
-            let _: HTTP.CacheControl.Type = HTTP.CacheControl.self
+        @Suite
+        struct Integration {
         }
     }
 }

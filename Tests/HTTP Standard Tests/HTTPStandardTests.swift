@@ -1,15 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// Copyright (c) 2026 Coen ten Thije Boonkkamp
-// Licensed under Apache License v2.0
-//
-// See LICENSE.txt for license information
-// See CONTRIBUTORS.txt for the list of project contributors
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-// ===----------------------------------------------------------------------===//
-
 import HTTP_Standard
 import Testing
 
@@ -18,8 +6,6 @@ extension HTTP {
     struct Test {
         @Suite
         struct Unit {
-
-            // MARK: - RFC 9110 (semantics) through the converger
 
             @Suite("Semantics (RFC 9110)")
             struct Semantics {
@@ -37,8 +23,6 @@ extension HTTP {
                 }
             }
 
-            // MARK: - RFC 9112 (HTTP/1.1) through the converger
-
             @Suite("HTTP/1.1 (RFC 9112)")
             struct Syntax {
 
@@ -48,8 +32,6 @@ extension HTTP {
                     #expect(HTTP.Version.http11.minor == 1)
                 }
             }
-
-            // MARK: - RFC 9111 (caching) through the converger
 
             @Suite("Caching (RFC 9111)")
             struct Caching {
